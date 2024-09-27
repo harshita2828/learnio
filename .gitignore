@@ -1,0 +1,27 @@
+# Node.js dependencies
+/node_modules
+
+# Log files
+*.log
+
+# Environment variables
+.env
+
+# Build directories (React or other frontend frameworks)
+client/build
+client/dist
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Coverage reports (if using testing frameworks like Jest)
+coverage/
+
+# Temporary files and directories
+*.tmp
+*.lock
