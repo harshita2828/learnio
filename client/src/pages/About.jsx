@@ -2,7 +2,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="h-heightWithoutNavbar flex flex-col items-center justify-start p-5 lg:flex-row bg-[#CBE2B5]">
+    <div className="h-heightWithoutNavbar flex flex-col items-center justify-start p-5 lg:flex-row bg-[#D8D2C2]">
       <div className="grid h-full w-full place-content-center">
         <img
           src="./aboutUs.svg"

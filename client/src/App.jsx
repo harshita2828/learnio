@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import Search from "./pages/Search";
 import About from "./pages/About";
 import Upload from "./pages/Upload";
-import Faq from "./pages/Faq";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -34,7 +33,6 @@ const App = () => {
             </>
           )}
           <Route path="/about" element={<About />} />
-          <Route path="/faq" element={<Faq />} />
         </Routes>
       </div>
     </Router >

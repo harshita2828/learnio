@@ -26,16 +26,16 @@ const Hero = () => {
           "
           >
             {isAuthenticated ? (
-              <Link to="/search" className="mr-10 rounded-xl bg-white px-6 py-3 text-lg font-bold text-blue-500 hover:bg-gray-100">Get Started</Link>
+              <Link to="/search" className="mr-10 rounded-xl bg-[#FAF7F0] px-6 py-3 text-lg text-black hover:bg-[#D8D2C2]">Get Started</Link>
             ) : (
               <>
                 <Link to="/login">
-                  <button className="rounded-xl bg-[#86AB89] px-7 py-4  text-black">
+                  <button className="rounded-xl bg-[#FAF7F0] px-7 py-4  text-black hover:bg-[#D8D2C2]">
                     Login
                   </button>
                 </Link>
                 <Link to="/signup">
-                  <button className="rounded-xl bg-[#86AB89] px-7 py-4  text-black ">
+                  <button className="rounded-xl bg-[#FAF7F0] px-7 py-4  text-black hover:bg-[#D8D2C2]">
                     Signup
                   </button>
                 </Link>

@@ -110,7 +110,7 @@ const UploadNote = () => {
           </div>
         </label>
       </div>
-      <button className="my-5 w-full max-w-[550px] rounded-xl bg-blue-500 py-3 font-bold text-white hover:bg-blue-600 " type="submit">
+      <button className="my-5 w-full max-w-[550px] rounded-xl bg-[#4A4947] py-3 font-bold text-white hover:bg-[#B17457] " type="submit">
         Submit
       </button>
     </form>

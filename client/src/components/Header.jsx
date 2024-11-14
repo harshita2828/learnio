@@ -20,7 +20,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="flex h-[80px] items-center justify-center shadow-md bg-[#E7FBE6]" >
+    <header className="flex h-[80px] items-center justify-center shadow-md bg-[#FAF7F0]" >
       <div className="mx-5 flex w-full max-w-[1550px] items-center justify-between">
         {/* image section */}
         <div className="flex h-[60px] w-[120px] items-center justify-center overflow-hidden">
@@ -46,11 +46,11 @@ const Navbar = () => {
                 <MdOutlineFileUpload className="text-[24px]" />
               </Link>
               <Link to="/profile">
-                <button className="rounded-xl bg-[#86AB89] px-5 py-2  hover:bg-[#3B3030] text-[#FFF0D1]">
+                <button className="rounded-xl bg-[#4A4947] px-5 py-2  hover:bg-[#B17457] text-[#FFF0D1]">
                   Profile
                 </button>
               </Link>
-              <button className="rounded-xl bg-[#86AB89] px-5 py-2  hover:bg-[#3B3030] text-[#FFF0D1]" onClick={handleLogout}>
+              <button className="rounded-xl bg-[#4A4947] px-5 py-2  hover:bg-[#B17457] text-[#FFF0D1]" onClick={handleLogout}>
                 Logout
               </button>
             </>
@@ -58,12 +58,12 @@ const Navbar = () => {
             <>
 
               <Link to="/login">
-                <button className="rounded-xl bg-[#86AB89] px-5 py-2 ">
+                <button className="rounded-xl bg-[#4A4947] px-5 py-2 hover:bg-[#B17457] text-white">
                   Login
                 </button>
               </Link>
               <Link to="/signup">
-                <button className="rounded-xl bg-[#86AB89] px-5 py-2 ">
+                <button className="rounded-xl bg-[#4A4947] px-5 py-2 hover:bg-[#B17457] text-white">
                   Signup
                 </button>
               </Link>
