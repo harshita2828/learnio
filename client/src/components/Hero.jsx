@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -8,7 +7,10 @@ const Hero = () => {
 
 
   return (
-    <div className="bg-unsplashBgImage relative flex h-full items-center justify-center bg-cover bg-center">
+    <div className="relative flex h-full items-center justify-center bg-cover bg-center
+    " style={{
+      backgroundImage: "url('https://images.unsplash.com/photo-1499914485622-a88fac536970?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"
+    }}>
       <div className="absolute inset-0 bg-black bg-opacity-70" />
       <div className="relative z-10 w-full max-w-[860px] text-center text-white">
         <h1 className="text-4xl md:text-5xl">LEARNIO</h1>
@@ -26,7 +28,7 @@ const Hero = () => {
           "
           >
             {isAuthenticated ? (
-              <Link to="/search" className="mr-10 rounded-xl bg-[#FAF7F0] px-6 py-3 text-lg text-black hover:bg-[#D8D2C2]">Get Started</Link>
+              <Link to="/search" className="rounded-xl bg-[#FAF7F0] px-6 py-3 text-lg text-black hover:bg-[#D8D2C2]">Get Started</Link>
             ) : (
               <>
                 <Link to="/login">

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const Signup = () => {
   const [profilePreviewImage, setProfilePreviewImage] = useState("");
@@ -12,9 +13,42 @@ const Signup = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const navigate = useNavigate();
 
   const registerUser = async (e) => {
     e.preventDefault();
+
+    if (
+      !firstName ||
+      !lastName ||
+      !userEmail ||
+      !userMobile ||
+      !userName ||
+      !userPassword
+    ) {
+      toast.error("All fields are required!");
+      return;
+    }
+
+    if (userMobile.length !== 10) {
+      toast.error("Mobile number must be exactly 10 digits.");
+      <ToastContainer />;
+      return;
+    }
+
+    const passwordRegex =
+        /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+      if (!passwordRegex.test(userPassword)) {
+        toast.error(
+          "Password must be at least 8 characters long and include at least one letter, one number, and one special character.",
+        );
+        return;
+      }
+
     const formData = new FormData();
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
@@ -25,6 +59,8 @@ const Signup = () => {
     formData.append("userPassword", userPassword);
     formData.append("profileImage", profileImage);
 
+    setIsSubmitting(true);
+
     try {
       const result = await axios.post(
         "http://localhost:6969/auth/signup",
@@ -34,20 +70,59 @@ const Signup = () => {
         },
       );
       console.log("Data: ", result);
+
       alert("User Entry Saved in Database. You may login now.");
+
+      setFirstName("");
+      setLastName("");
+      setUserBio("");
+      setUserEmail("");
+      setUserMobile("");
+      setUserName("");
+      setUserPassword("");
+      setProfileImage("");
+      setProfilePreviewImage("");
+
+      
+
+     
     } catch (error) {
       console.log("Failed to Register User: ", error);
+      setFirstName("");
+      setLastName("");
+      setUserBio("");
+      setUserEmail("");
+      setUserMobile("");
+      setUserName("");
+      setUserPassword("");
+      setProfileImage("");
+      setProfilePreviewImage("");
+      if (error.response && error.response.status === 409) {
+        toast.error("User already exists. Kindly login.");
+      } else if (error.response) {
+        toast.error(error.response.data || "An unexpected error occurred.");
+      } else {
+        setErrorMessage("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setIsSubmitting(false); // Enable the button after the request
     }
+
+    navigate("/login");
   };
 
   return (
-    <div className="flex w-full h-heightWithoutNavbar items-center justify-center bg-[#D8D2C2] p-4">
+    <div className="flex h-heightWithoutNavbar w-full items-center justify-center p-4">
       <form
-        className="flex flex-col w-full max-w-[700px] bg-white p-4 max-h-full justify-around rounded-xl shadow-xl h-100vh"
+        className="h-100vh flex max-h-full w-full max-w-[700px] flex-col justify-around rounded-xl bg-white p-4 shadow-xl"
         onSubmit={registerUser}
       >
         <h1 className="mb-2 w-full text-center text-xl font-black">Register</h1>
-
+        {errorMessage && (
+          <p className="mb-2 text-center font-bold text-red-500">
+            {errorMessage}
+          </p>
+        )}
         <div className="flex w-full justify-between gap-2">
           <div className="flex w-full max-w-[300px] flex-col items-start justify-center">
             <label className="font-bold" htmlFor="firstName">
@@ -57,6 +132,7 @@ const Signup = () => {
               type="text"
               id="firstName"
               name="firstName"
+              value={firstName}
               className="w-full rounded-lg border p-2 focus:border-blue-500  focus:outline-none"
               placeholder="John"
               onChange={(e) => setFirstName(e.target.value)}
@@ -70,6 +146,7 @@ const Signup = () => {
               type="text"
               id="lastName"
               name="lastName"
+              value={lastName}
               className="w-full rounded-lg border p-2 focus:border-blue-500  focus:outline-none"
               placeholder="Doe"
               onChange={(e) => setLastName(e.target.value)}
@@ -87,6 +164,7 @@ const Signup = () => {
               id="userEmail"
               className="w-full rounded-lg border p-2 focus:border-blue-500  focus:outline-none"
               placeholder="your.email@example.com"
+              value={userEmail}
               onChange={(e) => setUserEmail(e.target.value)}
             />
           </div>
@@ -101,7 +179,9 @@ const Signup = () => {
               className="w-full rounded-lg border p-2 focus:border-blue-500  focus:outline-none"
               placeholder="0000000000"
               onChange={(e) => setUserMobile(e.target.value)}
+              value={userMobile}
               maxLength={10}
+              minLength={10}
             />
           </div>
         </div>
@@ -116,6 +196,7 @@ const Signup = () => {
               id="userName"
               className="w-full rounded-lg border p-2 focus:border-blue-500  focus:outline-none"
               placeholder="johndoe123"
+              value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
@@ -129,6 +210,7 @@ const Signup = () => {
               id="userPassword"
               className="w-full rounded-lg border p-2 focus:border-blue-500  focus:outline-none"
               placeholder="*********"
+              value={userPassword}
               onChange={(e) => setUserPassword(e.target.value)}
             />
           </div>
@@ -141,6 +223,7 @@ const Signup = () => {
           <textarea
             id="userBio"
             rows="3"
+            value={userBio}
             className="h-20 w-full rounded-lg border p-2  focus:outline-none"
             placeholder="Tell us about yourself"
             onChange={(e) => setUserBio(e.target.value)}
@@ -162,18 +245,18 @@ const Signup = () => {
               <img
                 src={profilePreviewImage}
                 alt="Preview"
-                className="h-full w-full object-cover" // Ensure the image covers the div properly
+                className={`h-full w-full object-cover ${!profilePreviewImage && "hidden"}`} // Ensure the image covers the div properly
               />
             )}
           </div>
 
           <label
             htmlFor="dropzone-file"
-            className="flex h-22 w-80 cursor-pointer rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 items-center justify-center"
+            className="h-22 flex w-80 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100"
           >
             <div className="flex flex-col items-center justify-center pb-4 pt-4">
               <svg
-                className="mb-2 h-6 w-6 text-gray-500 ext-center"
+                className="ext-center mb-2 h-6 w-6 text-gray-500"
                 aria-hidden="true"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -187,7 +270,9 @@ const Signup = () => {
                   d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                 />
               </svg>
-              <p className="text-xs text-gray-500 text-center mb-2">Upload Image</p>
+              <p className="mb-2 text-center text-xs text-gray-500">
+                Upload Image
+              </p>
               <input
                 type="file"
                 id="dropzone-file"
@@ -203,9 +288,17 @@ const Signup = () => {
           </label>
         </div>
 
-        <button className="mt-4 w-full rounded-lg bg-[#4A4947] px-4 py-2 hover:bg-[#B17457] text-white">
-          Register
-        </button>
+        <button
+  className="mt-4 w-full rounded-lg bg-[#278adb] px-4 py-2 text-white hover:bg-[#B17457]"
+  type="submit"
+  disabled={isSubmitting}
+>
+  <span
+    className={isSubmitting ? "text-lg font-semibold animate-pulse" : "text-lg font-semibold"}
+  >
+    {isSubmitting ? "Registering..." : "Register"}
+  </span>
+</button>
 
         <div className="mt-2 w-full text-center text-sm">
           Already have an account?{" "}

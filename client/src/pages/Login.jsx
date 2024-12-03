@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { setUserData } from "../Redux/slices/user-slice";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,40 +16,60 @@ const Login = () => {
   const [userPassword, setUserPassword] = useState("");
 
   const loginUser = async (e) => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
-      const user = {
-        userEmail,
-        userPassword,
-      };
+  if (!userEmail.trim() || !userPassword.trim()) {
+    toast.error("Please enter both email and password.");
+    return; // Stop further execution if validation fails
+  }
+
+  try {
+    const user = {
+      userEmail,
+      userPassword,
+    };
+      
 
       const result = await axios.post("http://localhost:6969/auth/login", user);
-      if(result.data.status==="Error")
-      {
-        toast.error("wrong credentials ");
-        navigate("/login");
+      if (result.data.status === "Error") {
+        if (result.data.message === "User does not exist") {
+          toast.error("User does not exist. Kindly sign up first.");
+          navigate("/signup");
+        } else if (result.data.message === "Wrong credentials") {
+          toast.error("Incorrect email or password. Please try again.");
+        }
+      } else {
+        // Successful Login
+        toast.success("You have successfully logged in!");
+        dispatch(setUserData(result.data));
+        navigate("/"); // Redirect to the respective page
       }
-      else{
-      console.log("User Logged in Successfully: ", result);
-      dispatch(setUserData(result.data));
-      navigate("/");
-      }
-
-
-
     } catch (error) {
-      console.log("Cannot Login the User: ", error);
+      if (error.response) {
+        if (error.response.status === 404) {
+          toast.error("User does not exist. Kindly sign up first.");
+          navigate("/signup");
+        } else if (error.response.status === 401) {
+          toast.error("Incorrect email or password. Please try again.");
+        } else {
+          toast.error("An unexpected error occurred. Please try again later.");
+        }
+      } else {
+        console.log("Cannot Login the User: ", error);
+        toast.error("An unexpected error occurred. Please check your connection.");
+      }
+      <ToastContainer/>
     }
   };
 
   return (
-    <div className="h-heightWithoutNavbar flex w-full items-center justify-center p-5 bg-[#D8D2C2]">
-      <form className="flex w-full max-w-[420px] flex-col gap-4 rounded-xl bg-white p-5 shadow-xl" onSubmit={loginUser}>
+    <div className="h-heightWithoutNavbar flex flex-col items-center justify-evenly p-5 lg:flex-row">
+
+      <form className="h-ful items-center justify-center flex w-full max-w-[500px] flex-col gap-4 rounded-xl bg-white p-5 shadow-xl" onSubmit={loginUser}>
         <h1 className="text-2xl font-bold">Login</h1>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col items-start justify-center">
-            <label className="font-bold" htmlFor="userEmail">Email</label>
+        <div className="flex flex-col gap-4 w-[90%]">
+          <div className="flex flex-col items-start justify-center ">
+            <label className="font-bold " htmlFor="userEmail">Email</label>
             <input
               type="email"
               id="userEmail"
@@ -80,7 +100,19 @@ const Login = () => {
             <p className="font-bold">Create an account</p>
           </Link>
         </div>
+        <div className="text-sm text-center mt-2">
+          <Link to="/forgot-password" className="font-bold text-blue-500 hover:underline cursor-pointer">
+            Forgot Password?
+          </Link>
+        </div>
       </form>
+      <div className="grid place-content-center">
+        <img
+          src="./login.jpg"
+          alt=""
+          className="hidden sm:block md:w-[350px] lg:w-[500px] w-[200px] sm:w-[300px]"
+        />
+      </div>
     </div>
   );
 };

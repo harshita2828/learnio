@@ -17,7 +17,7 @@ const uploadNote = async (req, res) => {
         const file = req.file.filename;
 
         const uploadedBy = req.body.userId;
-        console.log(uploadedBy);
+        (uploadedBy);
 
         const newFile = new Notes({
             fileName: fileName,
@@ -32,7 +32,7 @@ const uploadNote = async (req, res) => {
 
     } catch (error) {
         res.status(400).json({ error: error.message });
-        console.log(error);
+        (error);
     }
 };
 
@@ -59,14 +59,14 @@ const getNote = async (req, res) => {
         res.send({ data: data });
 
     } catch (error) {
-        console.log(error);
+        (error);
     }
 };
 
 const getNoteByID = async (req, res) => {
     try {
         const userId = req.params.id;
-        console.log(userId);
+        (userId);
 
         await Notes.find({
             uploadedBy: userId
@@ -74,7 +74,7 @@ const getNoteByID = async (req, res) => {
             res.send({ data: data });
         })
     } catch (error) {
-        console.log(error);
+        (error);
     }
 };
 
