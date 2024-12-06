@@ -17,8 +17,6 @@ var upload = multer({
 const signup = async (req, res) => {
     try {
         const { firstName, lastName, userBio, userEmail, userMobile, userName } = req.body;
-
-        // Check if user already exists by email or username
         const existingUser = await User.findOne({ 
             $or: [{ userEmail }, { userMobile }] 
         });
@@ -26,24 +24,16 @@ const signup = async (req, res) => {
         if (existingUser) {
             return res.status(401).send("User already exists with this email or username. Please log in.");
         }
-
-        // Check if file is provided
         if (!req.file) {
             return res.status(400).json({ error: "No Profile Image Provided" });
         }
-
-        // Upload profile image to Cloudinary
         const result = await cloudinary.uploader.upload(req.file.path);
         console.log(result);
-
-        // Encrypt user password
         const password = req.body.userPassword;
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
         const encryptedPassword = await bcrypt.hash(password, salt);
         console.log("Request Body: ", req.body);
-
-        // Create new user
         const newUser = new User({
             firstName,
             lastName,
@@ -54,8 +44,6 @@ const signup = async (req, res) => {
             userPassword: encryptedPassword,
             profileImage: result.secure_url
         });
-
-        // Save the user in the database
         await newUser.save();
 
         return res.status(200).json({

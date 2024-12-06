@@ -18,11 +18,6 @@ const Hero = () => {
         Welcome to Learnio – your ultimate platform for organizing, accessing, and sharing PDF notes effortlessly. Transform the way you manage your study materials with our streamlined solutions. Say farewell to disorganized notebooks and embrace a new level of academic excellence. Simplify your study routine, make your notes work for you, and step into a new era of innovation. Start your journey with Learnio today!
         </p>
         <div className="mt-5">
-          {/* <Link to="/search">
-            <button className="rounded-xl bg-white px-7 py-4 font-black text-blue-500 ">
-              Get Started
-            </button>
-          </Link> */}
           <div
             className="flex items-center justify-center gap-5
           "

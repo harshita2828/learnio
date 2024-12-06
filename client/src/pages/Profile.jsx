@@ -28,7 +28,6 @@ const Profile = () => {
     <div className="lg:h-heightWithoutNavbar flex flex-col items-center justify-center border border-red-500 lg:flex-row">
       <div className="flex w-full flex-col items-center justify-center border-[3px] border-green-500 py-4 lg:h-full lg:w-[40%]">
         <div className="grid h-[200px] w-[200px] place-content-center overflow-hidden rounded-full bg-gray-400 text-2xl font-black">
-          {/* 200 x 200 */}
           <img src={user.profileImage} alt="userprofile" className="" />
         </div>
         <div className="">
@@ -42,7 +41,6 @@ const Profile = () => {
             </p>
           </div>
         </div>
-        {/* counts */}
         <div className="flex items-center justify-center gap-4">
           <div className="grid h-[80px] w-[100px] place-content-center">
             <p className="text-center text-[12px] font-bold">

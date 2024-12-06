@@ -105,7 +105,7 @@ const Signup = () => {
         setErrorMessage("An unexpected error occurred. Please try again.");
       }
     } finally {
-      setIsSubmitting(false); // Enable the button after the request
+      setIsSubmitting(false); 
     }
 
     navigate("/login");
@@ -231,13 +231,6 @@ const Signup = () => {
         </div>
 
         <div className="flex w-full items-center justify-around gap-2">
-          {/* <div className="mb-2 h-[100px] w-[100px] overflow-hidden rounded-full border border-dashed border-gray-300">
-            {profilePreviewImage === "" ? (
-              <p className="text-center text-sm text-gray-500">Profile</p>
-            ) : (
-              <img src={profilePreviewImage} alt="Preview" />
-            )}
-          </div> */}
           <div className="mb-2 flex h-[100px] w-[100px] items-center justify-center overflow-hidden rounded-full border border-dashed border-gray-300">
             {profilePreviewImage === "" ? (
               <p className="text-center text-sm text-gray-500">Profile</p>
@@ -245,8 +238,7 @@ const Signup = () => {
               <img
                 src={profilePreviewImage}
                 alt="Preview"
-                className={`h-full w-full object-cover ${!profilePreviewImage && "hidden"}`} // Ensure the image covers the div properly
-              />
+                className={`h-full w-full object-cover ${!profilePreviewImage && "hidden"}`} />
             )}
           </div>
 

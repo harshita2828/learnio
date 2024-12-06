@@ -20,7 +20,7 @@ const Login = () => {
 
   if (!userEmail.trim() || !userPassword.trim()) {
     toast.error("Please enter both email and password.");
-    return; // Stop further execution if validation fails
+    return; 
   }
 
   try {
@@ -39,10 +39,9 @@ const Login = () => {
           toast.error("Incorrect email or password. Please try again.");
         }
       } else {
-        // Successful Login
         toast.success("You have successfully logged in!");
         dispatch(setUserData(result.data));
-        navigate("/"); // Redirect to the respective page
+        navigate("/"); 
       }
     } catch (error) {
       if (error.response) {
