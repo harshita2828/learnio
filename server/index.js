@@ -8,35 +8,26 @@ const authRoutes = require("./Routes/auth");
 const noteRoutes = require("./Routes/notes");
 
 const app = express();
-const PORT = process.env.PORT || 6969;  
+const PORT = process.env.PORT || 6969;  // Ensure PORT is in uppercase
 
 dotenv.config();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: ['https://learnio-web-app.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-  })
-)
-
 // MongoDB Connection
 const connectDB = async () => {
   try {
-      await mongoose.connect(process.env.MONGO_URL, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-      });
-      console.log("MongoDB Connected Successfully");
+    await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB Connected Successfully");
   } catch (error) {
-      console.error("MongoDB Connection Error:", error);
-      setTimeout(connectDB, 5000);
+    console.error("MongoDB Connection Error:", error);
+    process.exit(1); // Exit process if connection fails
   }
 };
-
 
 // Route Handlers
 app.get("/", (req, res) => {
