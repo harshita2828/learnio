@@ -15,6 +15,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
+app.use(
+  cors({
+    origin: ['https://learnio-web-app.vercel.app/'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+)
+
 // MongoDB Connection
 const connectDB = async () => {
   try {
