@@ -7,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import 'react-toastify/dist/ReactToastify.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const Login = () => {
 
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ const Login = () => {
     };
       
 
-      const result = await axios.post("http://localhost:6969/auth/login", user);
+      const result = await axios.post(`${API_BASE_URL}/auth/login`, user);
       if (result.data.status === "Error") {
         if (result.data.message === "User does not exist") {
           toast.error("User does not exist. Kindly sign up first.");
