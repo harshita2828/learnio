@@ -1,12 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const User = require("../Models/User");
+import User from "../models/User";
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
 
 dotenv.config();
-
+ 
 const router = express.Router();
 
 const storage = multer.memoryStorage();
@@ -24,11 +24,6 @@ const signup = async (req, res) => {
         if (existingUser) {
             return res.status(401).send("User already exists with this email or username. Please log in.");
         }
-        if (!req.file) {
-            return res.status(400).json({ error: "No Profile Image Provided" });
-        }
-        const result = await cloudinary.uploader.upload(req.file.path);
-        console.log(result);
         const password = req.body.userPassword;
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);

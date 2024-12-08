@@ -8,9 +8,11 @@ const authRoutes = require("./Routes/auth");
 const noteRoutes = require("./Routes/notes");
 
 const app = express();
-const PORT = process.env.PORT || 6969;  // Ensure PORT is in uppercase
+const PORT = process.env.PORT || 6969;  
 
 dotenv.config();
+
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
@@ -32,6 +34,11 @@ const connectDB = async () => {
 // Route Handlers
 app.get("/", (req, res) => {
   res.send("Server Is Running");
+});
+
+app.post('/api/endpoint', (req, res) => {
+  console.log("Request received!");
+  res.json({ message: "Data received" });
 });
 
 app.use("/auth", authRoutes);
