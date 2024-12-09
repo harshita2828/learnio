@@ -15,13 +15,13 @@ dotenv.config();
 
 app.use(cors());
 
-const corsOptions = {
-  origin: "https://learnio-web-app.vercel.app/profile",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, 
-};
+// const corsOptions = {
+//   origin: "https://learnio-web-app.vercel.app/profile",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true, 
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(express.json());

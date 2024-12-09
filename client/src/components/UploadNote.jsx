@@ -10,20 +10,23 @@ const UploadNote = () => {
   const [file, setFile] = useState("");
 
   const user = useSelector((state) => state.user.userData);
-  const userId = user._id;
+  console.log("User data: ", user);
+
+  const userId = user.user._id;
+  console.log("USer id:", userId );
 
   const submitFile = async (e) => {
     try {
       e.preventDefault();
 
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("tags", tags);
-      formData.append("file", file);
-      formData.append("userId", userId);
+      console.log("File selected: ", file);
 
-      console.log(formData);
+      const formData = new FormData();
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("tags", tags);
+        formData.append("file", file); 
+        formData.append("uploadedBy", userId);
 
       const result = await axios.post(
         "http://localhost:6969/notes/upload",

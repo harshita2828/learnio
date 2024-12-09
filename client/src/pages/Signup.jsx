@@ -3,9 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-
 const Signup = () => {
     // const [profilePreviewImage, setProfilePreviewImage] = useState("");
     // const [profileImage, setProfileImage] = useState("");
@@ -60,7 +57,7 @@ const Signup = () => {
 
         try {
             const result = await axios.post(
-                `${API_BASE_URL}/auth/signup`,
+                "http://localhost:6969/auth/signup",
                 userData,
                 {
                     headers: { "Content-Type": "application/json" },

@@ -11,71 +11,67 @@ var upload = multer({ storage: storage });
 
 const uploadNote = async (req, res) => {
     try {
-        const fileName = req.body.title;
-        const fileDescription = req.body.description;
-        const tags = req.body.tags;
-        const file = req.file.filename;
-
-        const uploadedBy = req.body.userId;
-        (uploadedBy);
-
-        const newFile = new Notes({
-            fileName: fileName,
-            fileDescription: fileDescription,
-            tags: tags,
-            files: file,
-            uploadedBy: uploadedBy
-        });
-
-        await newFile.save();
-        res.send({ status: "Ok" });
-
+      const { title, description, tags, uploadedBy } = req.body;
+      if (!req.file) {
+        return res.status(400).json({ error: "File upload failed" });
+      }
+      console.log("uploadedBy is. ",uploadedBy);
+      const newFile = new Notes({
+        fileName: title,
+        fileDescription: description,
+        tags: tags,
+        files: req.file.filename,
+        uploadedBy: uploadedBy,
+      });
+  
+      await newFile.save();
+      res.status(200).json({ message: "File uploaded successfully." });
     } catch (error) {
-        res.status(400).json({ error: error.message });
-        (error);
+      res.status(400).json({ error: error.message });
+      error;
     }
-};
+  };
+
 
 const getNote = async (req, res) => {
-    try {
-        const { title, tag } = req.query;
-        const query = {};
+  try {
+    const { title, tag } = req.query;
+    const query = {};
 
-        if (title) {
-            query.fileName = {
-                $regex: title,
-                $options: "i"
-            };
-        };
-
-        if (tag) {
-            query.tag = {
-                $regex: tag,
-                $options: "i"
-            };
-        };
-
-        const data = await Notes.find(query);
-        res.send({ data: data });
-
-    } catch (error) {
-        (error);
+    if (title) {
+      query.fileName = {
+        $regex: title,
+        $options: "i",
+      };
     }
+
+    if (tag) {
+      query.tags = {
+        $regex: tag,
+        $options: "i",
+      };
+    }
+
+    const data = await Notes.find(query);
+    res.send({ data: data });
+  } catch (error) {
+    error;
+  }
 };
 
 const getNoteByID = async (req, res) => {
-    try {
-        const userId = req.params.id;
-        (userId);
+  try {
+    const userId = req.params.id;
+    userId;
 
-        await Notes.find({
-            uploadedBy: userId
-        }).then(data => {
-            res.send({ data: data });
-        })
-    } catch (error) {
-        (error);
-    }
+    await Notes.find({
+      uploadedBy: userId,
+    }).then((data) => {
+      res.send({ data: data });
+    });
+  } catch (error) {
+    error;
+  }
 };
 
 module.exports = { uploadNote, getNote, getNoteByID };
