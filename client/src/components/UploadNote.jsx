@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.MODE === 'production'
+  ? import.meta.env.VITE_API_BASE_URL // Use production URL
+  : import.meta.env.VITE_API_BASE_URL_DEV;
 
 const UploadNote = () => {
   

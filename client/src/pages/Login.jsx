@@ -7,7 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import 'react-toastify/dist/ReactToastify.css';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.MODE === 'production'
+  ? import.meta.env.VITE_API_BASE_URL // Use production URL
+  : import.meta.env.VITE_API_BASE_URL_DEV;
 
 
 

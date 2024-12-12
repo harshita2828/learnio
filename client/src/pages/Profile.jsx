@@ -2,20 +2,25 @@ import { useEffect, useState } from "react";
 //import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import axios from "axios";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
+const API_BASE_URL =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_API_BASE_URL // Use production URL
+    : import.meta.env.VITE_API_BASE_URL_DEV;
 
 const Profile = () => {
-
   const user = useSelector((state) => state.user.userData);
 
   const [userFiles, setUserFiles] = useState([]);
+  console.log("User object from Redux:", user);
 
-  const userId = user._id;
+  const userId = user.user._id;
+  console.log(userId);
 
   useEffect(() => {
     const getUserFiles = async () => {
-      const result = await axios.get(API_BASE_URL+"/notes/getFiles/${userId}");
+      const result = await axios.get(
+        `${API_BASE_URL}/notes/getFiles/${userId}`,
+      );
       console.log(result.data);
       setUserFiles(result.data.data);
     };
@@ -27,7 +32,7 @@ const Profile = () => {
   const numberofFiles = userFiles.reduce((count) => count + 1, 0);
 
   return (
-    <div className="lg:h-heightWithoutNavbar flex flex-col items-center justify-center border border-red-500 lg:flex-row">
+    <div className="flex flex-col items-center justify-center border border-red-500 lg:h-heightWithoutNavbar lg:flex-row">
       <div className="flex w-full flex-col items-center justify-center border-[3px] border-green-500 py-4 lg:h-full lg:w-[40%]">
         {/* <div className="grid h-[200px] w-[200px] place-content-center overflow-hidden rounded-full bg-gray-400 text-2xl font-black">
           <img src={user.profileImage} alt="userprofile" className="" />
@@ -38,9 +43,7 @@ const Profile = () => {
               <span>{user.firstName}</span> <span>{user.lastName}</span>
             </h2>
             <p className="mt-1 text-center">{user.userName}</p>
-            <p className="mt-1 text-center">
-              {user.userBio}
-            </p>
+            <p className="mt-1 text-center">{user.userBio}</p>
           </div>
         </div>
         <div className="flex items-center justify-center gap-4">
@@ -60,19 +63,20 @@ const Profile = () => {
       <div className="h-auto w-full border-[3px] border-amber-500 p-5 lg:h-full lg:w-[60%]">
         <h1 className="mb-3 text-xl font-black">My Documents :</h1>
         <div className="grid grid-cols-1 gap-5 p-4 sm:grid-cols-2 md:grid-cols-3">
-          {/* {userFiles.map((file) => (
+          {userFiles.map((file) => (
             <a
-              href={`http://localhost:6969/files/${file.files}`}
+              href={`${API_BASE_URL}/files/${file.files}`} // Using dynamic API base URL
               key={file._id}
               className="mb-3 flex h-[35px] max-w-[250px] items-center justify-between gap-10 rounded-xl border border-black px-4"
               target="_blank"
+              rel="noopener noreferrer" // Added rel="noopener noreferrer"
             >
-              <p className="font-semibold"> {file.fileName}</p>
+              <p className="font-semibold">{file.fileName}</p>
             </a>
-          ))} */}
+          ))}
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

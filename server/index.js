@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 6969;
 app.use(cors());
 
 const corsOptions = {
-  origin: "https://learnio-web-app.vercel.app",
+  origin: ["https://learnio-web-app.vercel.app","http://localhost:5173"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, 
 };
