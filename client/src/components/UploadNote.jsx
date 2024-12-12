@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const UploadNote = () => {
-
+  
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
@@ -29,7 +30,7 @@ const UploadNote = () => {
         formData.append("uploadedBy", userId);
 
       const result = await axios.post(
-        "http://localhost:6969/notes/upload",
+        API_BASE_URL+"/notes/upload",
         formData,
         {
           headers: {
