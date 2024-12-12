@@ -1,6 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
-import User from "../models/User";
+import User from "../Models/User";
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const cloudinary = require("cloudinary");

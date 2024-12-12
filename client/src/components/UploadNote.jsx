@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

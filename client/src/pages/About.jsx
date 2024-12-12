@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 
 const About = () => {
   return (
@@ -28,7 +28,7 @@ const About = () => {
             Who We Are:
           </h1>
           <p className="mt-1 text-[15px] lg:mt-3">
-            Learnio is more than just a website; it's a community-driven
+            Learnio is more than just a website: its a community-driven
             initiative fueled by the passion for learning. Founded by a group of
             dedicated students, our platform is a testament to the belief that
             education should be a collective journey. Our team comprises tech

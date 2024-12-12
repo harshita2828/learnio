@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
+//import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -24,7 +24,7 @@ const Profile = () => {
   }, [userId]);
 
   const numberofUploads = userFiles.length;
-  const numberofFiles = userFiles.reduce((count, file) => count + 1, 0);
+  const numberofFiles = userFiles.reduce((count) => count + 1, 0);
 
   return (
     <div className="lg:h-heightWithoutNavbar flex flex-col items-center justify-center border border-red-500 lg:flex-row">

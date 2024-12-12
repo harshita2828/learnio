@@ -19,7 +19,7 @@ const Navbar = () => {
   }, [location]);
 
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-  const user = useSelector((state) => state.user.userData);
+  //const user = useSelector((state) => state.user.userData);
 
   const handleLogout = () => {
     dispatch(removeUserData());

@@ -1,4 +1,3 @@
-import React from "react";
 import UploadNote from "../components/UploadNote";
 
 const Upload = () => {
