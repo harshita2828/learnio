@@ -6,12 +6,11 @@ const bodyParser = require("body-parser");
 
 const authRoutes = require("./Routes/auth");
 const noteRoutes = require("./Routes/notes");
-
-const app = express();
 //
 
 dotenv.config();
-
+const app = express();
+const PORT = process.env.PORT || 6969;
 
 app.use(cors());
 
