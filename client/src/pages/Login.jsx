@@ -33,8 +33,7 @@ const Login = () => {
       userPassword,
     };
       
-
-      const result = await axios.post("http://localhost:6969/auth/login", user);
+      const result = await axios.post(API_BASE_URL+"/auth/login", user);
       if (result.data.status === "Error") {
         if (result.data.message === "User does not exist") {
           toast.error("User does not exist. Kindly sign up first.");

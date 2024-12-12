@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+
 const Signup = () => {
     // const [profilePreviewImage, setProfilePreviewImage] = useState("");
     // const [profileImage, setProfileImage] = useState("");
@@ -57,7 +60,7 @@ const Signup = () => {
 
         try {
             const result = await axios.post(
-                "http://localhost:6969/auth/signup",
+               API_BASE_URL+"/auth/signup",
                 userData,
                 {
                     headers: { "Content-Type": "application/json" },
