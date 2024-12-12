@@ -3,13 +3,14 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
-
+const path = require("path");
 const authRoutes = require("./Routes/auth");
 const noteRoutes = require("./Routes/notes");
-//
+const app = express();
+app.use("/files", express.static(path.join(__dirname, "files")));
 
 dotenv.config();
-const app = express();
+
 const PORT = process.env.PORT || 6969;
 
 app.use(cors());

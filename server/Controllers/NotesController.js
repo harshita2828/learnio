@@ -6,8 +6,13 @@ const path = require("path");
 
 dotenv.config();
 
-const storage = multer.memoryStorage();
-var upload = multer({ storage: storage });
+const storage = multer.diskStorage({
+    destination: "./files",
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    },
+});
+const upload = multer({ storage });
 
 const uploadNote = async (req, res) => {
     try {
@@ -15,7 +20,6 @@ const uploadNote = async (req, res) => {
       if (!req.file) {
         return res.status(400).json({ error: "File upload failed" });
       }
-      console.log("uploadedBy is. ",uploadedBy);
       const newFile = new Notes({
         fileName: title,
         fileDescription: description,
@@ -62,15 +66,16 @@ const getNote = async (req, res) => {
 const getNoteByID = async (req, res) => {
   try {
     const userId = req.params.id;
-    userId;
 
-    await Notes.find({
-      uploadedBy: userId,
-    }).then((data) => {
-      res.send({ data: data });
-    });
+    const data = await Notes.find({ uploadedBy: userId });
+    if (!data || data.length === 0) {
+      return res.status(404).send({ error: "No notes found for this user." });
+    }
+
+    res.send({ data: data });
   } catch (error) {
-    error;
+    console.error(error);
+    res.status(500).send({ error: "An error occurred while fetching the notes." });
   }
 };
 
