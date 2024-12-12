@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const SearchBar = () => {
 
@@ -17,7 +19,7 @@ const SearchBar = () => {
     e.preventDefault();
 
     try {
-      const notes = await axios.get("http://localhost:6969/notes/getFiles", {
+      const notes = await axios.get(API_BASE_URL+"/notes/getFiles", {
         params: {
           title: searchQuery,
         },

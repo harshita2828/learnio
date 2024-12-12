@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const Profile = () => {
 
@@ -13,7 +15,7 @@ const Profile = () => {
 
   useEffect(() => {
     const getUserFiles = async () => {
-      const result = await axios.get(`http://localhost:6969/notes/getFiles/${userId}`);
+      const result = await axios.get(API_BASE_URL+"/notes/getFiles/${userId}");
       console.log(result.data);
       setUserFiles(result.data.data);
     };
